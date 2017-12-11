@@ -31,7 +31,19 @@ To submit twenty jobs with a learning rate of 0.1
 
 Here's `run-trials.sh`:
 
+```bash
+#! /bin/bash
+#
 
+for i in $(seq 1 20); do
+     qsub -v LEARNING_RATE=$1 -v RUN_DIRECTORY="n_layers_$i" run-n_layers.sub
+done
+```
+
+Follow the code from there to `run-n_layers.sub`, which is the job submission script sent to the 
+MERCED job scheduler. This calls the Python script `n_layers_experiment.py` that trains and tests a model for 
+five different n_layers configurations. The output is written to a single-line CSV; all CSV are 
+concatenated afterwards, averaged, and used for Table 1 in the paper.
 
 ### Create and evaluate a model
 
